@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "com.example.proto_datastore_stevdaza_san";
+option java_multiple_files = true;
+
+message Person{
+    string firstName = 1;
+    string lastName = 2;
+    int32 age = 3;
+}
