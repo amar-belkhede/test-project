@@ -35,7 +35,14 @@ class RemoveElement {
 
             return i+1;
         }
+
+//        https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii
+        fun duplicateFromSortedArray2(nums: Array<Int>): Int {
+
+            return 0
+        }
     }
+
 }
 
 fun main() {

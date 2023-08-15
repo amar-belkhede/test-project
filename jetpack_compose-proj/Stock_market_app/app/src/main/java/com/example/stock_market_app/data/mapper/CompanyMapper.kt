@@ -19,13 +19,13 @@ fun CompanyListing.toCompanyListingEntity(): CompanyListingEntity {
         exchange = exchange
     )
 }
-
-fun CompanyInfoDto.toCompanyInfo(): CompanyInfo {
-    return CompanyInfo(
-        symbol = symbol ?: "",
-        description = description ?: "",
-        name = name ?: "",
-        country = country ?: "",
-        industry = industry ?: ""
-    )
-}
+//
+//fun CompanyInfoDto.toCompanyInfo(): CompanyInfo {
+//    return CompanyInfo(
+//        symbol = symbol ?: "",
+//        description = description ?: "",
+//        name = name ?: "",
+//        country = country ?: "",
+//        industry = industry ?: ""
+//    )
+//}
