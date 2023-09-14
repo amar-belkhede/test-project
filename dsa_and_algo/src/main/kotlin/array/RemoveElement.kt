@@ -48,4 +48,21 @@ class RemoveElement {
 fun main() {
 //    println(RemoveElement.at(arrayOf(0,1,3,2,2,4,5,2), 2))
     println(RemoveElement.duplicateFromSortedArray(arrayOf(1,2,2,3,3,3,4,5,6,77)))
+    val car1 = car(name = "maruti")
+    val car2 = car(name = "maruti")
+
+    if(car1 == car2)
+        println("bot are same for ==")
+    else println("bot are not the same for ==")
+
+    if(car1 === car2)
+        println("bot are same for ===")
+    else println("bot are not the same for ===")
+
+    val l = List<Int>(10) { i-> i*i}
+    println(l)
 }
+
+data class car(
+    val name:String
+)

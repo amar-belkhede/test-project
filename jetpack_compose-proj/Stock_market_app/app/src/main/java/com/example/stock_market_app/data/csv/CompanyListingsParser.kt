@@ -1,5 +1,6 @@
 package com.example.stock_market_app.data.csv
 
+import android.annotation.SuppressLint
 import com.example.stock_market_app.domain.model.CompanyListing
 import com.opencsv.CSVReader
 import kotlinx.coroutines.Dispatchers
@@ -8,9 +9,10 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import javax.inject.Inject
 
-class CompanyListingsParser @Inject constructor(): CSVParser {
+class CompanyListingsParser @Inject constructor(): CSVParser<CompanyListing> {
+    @SuppressLint("SuspiciousIndentation")
     override suspend fun parse(stream: InputStream): List<CompanyListing> {
-            val csvReader = CSVReader(InputStreamReader(stream))
+        val csvReader = CSVReader(InputStreamReader(stream))
             return withContext(Dispatchers.IO) {
                 csvReader
                     .readAll()
