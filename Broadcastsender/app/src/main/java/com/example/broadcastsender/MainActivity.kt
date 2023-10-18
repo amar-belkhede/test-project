@@ -1,8 +1,6 @@
-package com.example.broadcastreceiver
+package com.example.broadcastsender
 
-import android.content.BroadcastReceiver
-import android.content.IntentFilter
-import android.net.ConnectivityManager
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,13 +8,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.broadcastreceiver.databinding.ActivityMainBinding
+import com.example.broadcastsender.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    val broadcastReceiver = ExampleBroadcastReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +31,10 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
-        var intentFilter = IntentFilter("com.example.broadcastreceiver.EXAMPLE_ACTION");
-        registerReceiver(broadcastReceiver, intentFilter)
+
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
 
-        unregisterReceiver(broadcastReceiver)
-    }
 }
