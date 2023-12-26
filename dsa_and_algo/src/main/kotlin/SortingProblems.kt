@@ -1,4 +1,5 @@
 import SortingProblems.InsertionSortList.ListNode
+import com.sun.source.tree.Tree
 import java.util.*
 
 
@@ -272,8 +273,48 @@ class SortingProblems {
         f.findKthLargest(intArrayOf(3,1,4,7,8,5),2)
     }
 
+    data class TreeNode(
+        var left: TreeNode,
+        var right: TreeNode,
+        var `val`: Int,
+    )
 
+    internal class binaryTreeLevelOrder {
+        fun levelOrder(root: TreeNode?): List<MutableList<Int>> {
+            // return iterative(root);
+            val list: MutableList<MutableList<Int>> = LinkedList()
+            recursive(root, 0, list)
+            return list
+        }
 
+        fun recursive(root: TreeNode?, level: Int, list: MutableList<MutableList<Int>>) {
+            if (root == null) return
+            if (level >= list.size) {
+                list.add(LinkedList())
+            }
+            list[level].add(root.`val`)
+            recursive(root.left, level + 1, list)
+            recursive(root.right, level + 1, list)
+        }
+
+        fun iterative(root: TreeNode?): List<List<Int>> {
+            val q: Queue<TreeNode> = LinkedList<TreeNode>()
+            val list: MutableList<List<Int>> = LinkedList()
+            if (root == null) return list
+            q.offer(root)
+            while (!q.isEmpty()) {
+                val levelNum = q.size
+                val subList: MutableList<Int> = LinkedList()
+                for (i in 0 until levelNum) {
+                    if (q.peek().left != null) q.offer(q.peek().left)
+                    if (q.peek().right != null) q.offer(q.peek().right)
+                    subList.add(q.poll().`val`)
+                }
+                list.add(subList)
+            }
+            return list
+        }
+    }
 }
 
 fun main() {
