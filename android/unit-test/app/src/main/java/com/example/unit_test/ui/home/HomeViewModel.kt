@@ -16,7 +16,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is home Fragment, by view model"
     }
     val text: LiveData<String> = _text
 
