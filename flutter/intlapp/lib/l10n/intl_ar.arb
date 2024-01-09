@@ -1,0 +1,9 @@
+{
+    "language": "Arabic",
+    "name":"amar",
+    "greeting": "Hello, {name}!",
+    "@greeting_plural": {
+        "one": "You have one message.",
+        "other": "You have {count} messages."
+    }
+}
