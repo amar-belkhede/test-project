@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intlapp/common/injection.dart';
+import 'package:intlapp/feature/weather/presentation/bloc/weather_bloc.dart';
+import 'package:intlapp/feature/weather/presentation/page/weather_page.dart';
 import 'package:intlapp/l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intlapp/repository/todo_repository.dart';
@@ -31,7 +34,13 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MultiBlocListener(
+        listeners: [
+          BlocProvider(create: (_)=> GetIt.I.get<WeatherBloc>()),
+        ],
+        child: WeatherPage(),
+      ),
     );
   }
 }
