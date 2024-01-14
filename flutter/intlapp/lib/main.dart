@@ -10,7 +10,7 @@ import 'package:intlapp/l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intlapp/repository/todo_repository.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependenciesInjection();
   runApp(const MyApp());
@@ -22,25 +22,75 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      supportedLocales: L10n.all,
-      locale: const Locale('en'),
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt.get<WeatherBloc>()),
       ],
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: MultiBlocListener(
-        listeners: [
-          BlocProvider(create: (_)=> getIt.get<WeatherBloc>()),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        supportedLocales: L10n.all,
+        locale: const Locale('en'),
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
         ],
-        child: WeatherPage(),
+        // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: DemoApp(),
+      ),
+    );
+  }
+}
+
+class DemoApp extends StatefulWidget {
+  const DemoApp({super.key});
+
+  @override
+  State<DemoApp> createState() => _DemoAppState();
+}
+
+class _DemoAppState extends State<DemoApp> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xff1D1E22),
+        title: const Text(
+          'Demo app',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const WeatherPage(),
+                      ),
+                    );
+                  },
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0xff1D1E22))),
+                  child: Text(
+                    "Weather app",
+                    style: TextStyle(color: Colors.white),
+                  ))
+            ],
+          ),
+        ),
       ),
     );
   }

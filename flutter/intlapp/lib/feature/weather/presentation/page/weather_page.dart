@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intlapp/common/injection.dart';
 import 'package:intlapp/core/constant/constant.dart';
 import 'package:intlapp/feature/weather/domain/entity/weather.dart';
 import 'package:intlapp/feature/weather/presentation/bloc/weather_bloc.dart';
 import 'package:intlapp/feature/weather/presentation/bloc/weather_event.dart';
 import 'package:intlapp/feature/weather/presentation/bloc/weather_state.dart';
 
-class WeatherPage extends StatelessWidget {
+class WeatherPage extends StatefulWidget {
   const WeatherPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext buildContext) {
+  State<WeatherPage> createState() => _WeatherPageState();
+}
+
+class _WeatherPageState extends State<WeatherPage> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xff1D1E22),
@@ -24,7 +30,7 @@ class WeatherPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(buildContext).size.height,
+          height: MediaQuery.of(context).size.height,
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
@@ -44,7 +50,7 @@ class WeatherPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10)),
                   ),
                   onChanged: (query) {
-                    buildContext.read<WeatherBloc>().add(OnCityChanged(query));
+                    context.read<WeatherBloc>().add(OnCityChanged(query));
                   },
                 ),
                 const SizedBox(height: 32.0),
@@ -95,9 +101,8 @@ class WeatherPage extends StatelessWidget {
                               ),
                               IconButton(
                                   onPressed: () {
-                                    buildContext.read<WeatherBloc>().add(
-                                        OnSaveCity(
-                                            weatherEntity: state.result));
+                                    context.read<WeatherBloc>().add(OnSaveCity(
+                                        weatherEntity: state.result));
                                   },
                                   icon: Icon(Icons.save))
                             ],
@@ -198,39 +203,40 @@ class WeatherPage extends StatelessWidget {
                                 itemCount: state.savedWeatherList.length,
                                 itemBuilder: (context, index) {
                                   var entity = state.savedWeatherList[index];
-                                  return Row(
-                                    children: [
-                                      Text(
-                                        '${entity.cityName} | ${entity.description}',
-                                        style: const TextStyle(
-                                          fontSize: 16.0,
-                                          letterSpacing: 1.2,
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            buildContext
-                                                .read<WeatherBloc>()
-                                                .add(OnDeleteCity(
-                                                    weatherEntity: state.result,
-                                                    index: index));
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            context.read<WeatherBloc>().add(
+                                                OnCityChanged(entity.cityName));
                                           },
-                                          icon: Icon(Icons.delete))
-                                    ],
+                                          child: Text(
+                                            '${entity.cityName} | ${entity.description}',
+                                            style: const TextStyle(
+                                              fontSize: 16.0,
+                                              letterSpacing: 1.2,
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              context.read<WeatherBloc>().add(
+                                                  OnDeleteCity(
+                                                      weatherEntity:
+                                                          state.result,
+                                                      index: index));
+                                            },
+                                            icon: Icon(Icons.delete))
+                                      ],
+                                    ),
                                   );
                                 },
                               ),
                             ),
                           ),
-
-                          // for(int i=0;i<state.savedWeatherList.length;i++)
-                          //   Text(state.savedWeatherList[i].cityName),
-
-                          // for(int i=0;i<state.savedWeatherList.length;i++)
-                          //   Text(state.savedWeatherList[i].cityName),
-
-                          // for(int i=0;i<state.savedWeatherList.length;i++)
-                          //   Text(state.savedWeatherList[i].cityName)
                         ],
                       );
                     }

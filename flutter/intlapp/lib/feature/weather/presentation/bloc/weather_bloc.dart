@@ -18,12 +18,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       (event, emit) async {
         emit(WeatherLoading());
         final result = await _getCurrentWeatherUseCase.execute(event.cityName);
+        List<WeatherEntity> weatherList =
+          await _weatherHiveUseCase.getAllSearchedWeather();
         result.fold(
           (failure) {
             emit(WeatherLoadFailue(failure.message));
           },
           (data) {
-            emit(WeatherLoaded(data, List.empty()));
+            emit(WeatherLoaded(data, weatherList));
           },
         );
       },
