@@ -12,13 +12,18 @@ class WeatherEmpty extends WeatherState {}
 
 class WeatherLoading extends WeatherState {}
 
+class WeatherSaved extends WeatherState {}
+
+class WeatherDeleted extends WeatherState {}
+
 class WeatherLoaded extends WeatherState {
   final WeatherEntity result;
+  final List<WeatherEntity> savedWeatherList;
 
-  const WeatherLoaded(this.result);
+  const WeatherLoaded(this.result, this.savedWeatherList);
 
   @override
-  List<Object?> get props => [result];
+  List<Object?> get props => [result, savedWeatherList];
 }
 
 class WeatherLoadFailue extends WeatherState {

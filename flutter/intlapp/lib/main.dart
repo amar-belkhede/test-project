@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intlapp/common/injection.dart';
 import 'package:intlapp/feature/weather/presentation/bloc/weather_bloc.dart';
 import 'package:intlapp/feature/weather/presentation/page/weather_page.dart';
@@ -9,9 +10,9 @@ import 'package:intlapp/l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intlapp/repository/todo_repository.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  configureDependenciesInjection();
+  await configureDependenciesInjection();
   runApp(const MyApp());
 }
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       supportedLocales: L10n.all,
-      locale: const Locale('ar'),
+      locale: const Locale('en'),
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       home: MultiBlocListener(
         listeners: [
-          BlocProvider(create: (_)=> GetIt.I.get<WeatherBloc>()),
+          BlocProvider(create: (_)=> getIt.get<WeatherBloc>()),
         ],
         child: WeatherPage(),
       ),

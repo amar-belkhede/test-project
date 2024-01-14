@@ -12,10 +12,12 @@ import 'package:intlapp/feature/weather/domain/repository/weather_repository.dar
 class WeatherRepositoryImpl extends WeatherRepository {
   
   final WeatherRemoteDataSource weatherRemoteDataSource;
-  WeatherRepositoryImpl({required this.weatherRemoteDataSource});
-  
+  WeatherRepositoryImpl(
+      {required this.weatherRemoteDataSource});
+
   @override
-  Future<Either<Failure, WeatherEntity>> getCurrentWeather(String cityName) async {
+  Future<Either<Failure, WeatherEntity>> getCurrentWeather(
+      String cityName) async {
     try {
       final result = await weatherRemoteDataSource.getCurrentWeather(cityName);
       return Right(result.toEntity());
@@ -25,5 +27,4 @@ class WeatherRepositoryImpl extends WeatherRepository {
       return const Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
-  
 }
